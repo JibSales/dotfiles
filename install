@@ -4,7 +4,8 @@ clear
 
 echo "Installing JibSales bash profile"
 
-cp ./.* $HOME
-cp -r ./.vim $HOME
+cp ./src/.* $HOME
+cp -r ./src/.vim $HOME
+ls -lah --color
 
 echo "Finished installing."
