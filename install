@@ -1,0 +1,10 @@
+#! /bin/bash
+
+clear
+
+echo "Installing JibSales bash profile"
+
+cp ./.* $HOME
+cp -r ./.vim $HOME
+
+echo "Finished installing."
