@@ -1,4 +1,2 @@
-Debian-Profile
-==============
-
-My ideal setup for bash and vim with an install script
+#Debian Profile
+My preferred configurations for both bash and vim.
