@@ -2,17 +2,13 @@
 
 clear
 
-echo "Installing JibSales bash profile"
-echo
-
 cp ./src/.bashrc $HOME
 cp ./src/.bash_aliases $HOME
 cp ./src/.dircolors $HOME
 cp ./src/.vimrc $HOME
 cp -r ./src/.vim $HOME
 
-echo
-echo "Finished installing."
-echo
+source $HOME/.profile
 
+echo "Home Directory Listing"
 ls -lah --color $HOME
