@@ -1,2 +1,2 @@
 #Dot Files
-My preferred configurations for both bash and vim.
+My $ZSH_CUSTOM folder for oh-my-zsh goodness.
