@@ -37,7 +37,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'scrooloose/nerdtree'		        "File System Explorer
 Plugin 'tpope/vim-fugitive'                 "Git Helper
-Plugin 'scrooloose/syntastic'               "Syntax checker
 Plugin 'tpope/vim-surround'                 "Text wrapping helper
 Plugin 'bling/vim-airline'                  "Status bar/tabline
 Plugin 'altercation/vim-colors-solarized'   "Because science
@@ -135,6 +134,9 @@ set mat=5                  " duration to show paren match 1/10 sec
 " ESC is too far away!
 :imap jj <Esc>
 
+" Toggle Light/Dark color theme
+:map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+
 "------------------------------------------------------------------------------
 " NERDTree Config
 "------------------------------------------------------------------------------
@@ -194,16 +196,3 @@ autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
 
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
-
-"------------------------------------------------------------------------------
-" Syntastic Config
-"------------------------------------------------------------------------------
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
