@@ -9,3 +9,7 @@ alias rmDS="find ./ -name ".DS_Store" -depth -exec rm {} \;"
 alias ls="ls --color=always" 
 alias grep="grep --color=always"
 alias egrep="egrep --color=always"
+
+# Easy Config Editing
+alias zshconfig="vim ~/.zshrc"
+alias vimconfig="vim ~/.vimrc"

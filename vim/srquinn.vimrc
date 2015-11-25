@@ -40,7 +40,7 @@ Plugin 'tpope/vim-fugitive'                 "Git Helper
 Plugin 'tpope/vim-surround'                 "Text wrapping helper
 Plugin 'bling/vim-airline'                  "Status bar/tabline
 Plugin 'altercation/vim-colors-solarized'   "Because science
-Plugin 'Valloric/YouCompleteMe'             "Tab Completion
+"Plugin 'Valloric/YouCompleteMe'             "Tab Completion
 Plugin 'marijnh/tern_for_vim'               "Ternjs support
 Plugin 'ervandew/eclim'                     "Headless eclipse integration
 Plugin 'docunext/closetag.vim'              "Close tags with ease
