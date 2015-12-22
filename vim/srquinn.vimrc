@@ -38,10 +38,11 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'		        "File System Explorer
 Plugin 'tpope/vim-fugitive'                 "Git Helper
 Plugin 'tpope/vim-surround'                 "Text wrapping helper
+Plugin 'ctrlpvim/ctrlp.vim'                 "Fuzzy file finder
 Plugin 'bling/vim-airline'                  "Status bar/tabline
 Plugin 'altercation/vim-colors-solarized'   "Because science
-"Plugin 'Valloric/YouCompleteMe'             "Tab Completion
-Plugin 'marijnh/tern_for_vim'               "Ternjs support
+Plugin 'Valloric/YouCompleteMe'             "Tab Completion
+"Plugin 'marijnh/tern_for_vim'               "Ternjs support
 Plugin 'ervandew/eclim'                     "Headless eclipse integration
 Plugin 'docunext/closetag.vim'              "Close tags with ease
 Plugin 'pangloss/vim-javascript'            "Javascript syntax
@@ -100,9 +101,8 @@ set autoindent             " automatic indent new lines
 set copyindent             " copy the previous indentation on autoindenting
 set smartindent            " be smart about it
 set nowrap                 " do not wrap lines
-set softtabstop=4          " yep, four
-set shiftwidth=4           " ..
-set tabstop=4
+set tabstop=2
+set shiftwidth=2           " ..
 set expandtab              " expand tabs to spaces
 set nosmarttab             " fuck tabs
 
@@ -117,6 +117,8 @@ autocmd FileType markdown set wrap linebreak
 autocmd BufNewFile,BufRead *.zsh,*.zsh-* set filetype=zsh
 " Git commits
 autocmd FileType gitcommit set wrap linebreak
+" HTML Files
+"autocmd BufNewFile,BufReadPost *.jsp set filetype=html
 
 "------------------------------------------------------------------------------
 " Visual
@@ -130,6 +132,9 @@ set mat=5                  " duration to show paren match 1/10 sec
 "------------------------------------------------------------------------------
 " Key Mappings
 "------------------------------------------------------------------------------
+
+" Change the <leader> to something more reachable
+:let mapleader = ","
 
 " ESC is too far away!
 :imap jj <Esc>
@@ -196,3 +201,11 @@ autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
 
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+"------------------------------------------------------------------------------
+" CtrlP Config
+"------------------------------------------------------------------------------
+
+let g:ctrlp_map='<c-p>'
+let g:ctrlp_cmd = 'CtrlPMRU'
