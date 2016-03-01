@@ -1,0 +1,11 @@
+#
+# Executes commands at logout.
+#
+# Authors:
+#   Sean R. Quinn <srquinn21@gmail.com>
+#
+
+# Print the message.
+cat <<-EOF
+
+EOF
