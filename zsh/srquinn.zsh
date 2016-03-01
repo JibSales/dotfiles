@@ -1,30 +1,46 @@
-#==============================================================================
-#  Custom Shell Setup 
-#==============================================================================
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
-dark() {
-    # Use the Solarized Dark Color Scheme
-    # Set console colors to Solarized (dark) Colors by overriding the defaults
-    if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        gconftool-2 --set "/apps/gnome-terminal/profiles/Default/palette" --type string "#073642:#DC322F:#859900:#B58900:#268BD2:#D33682:#2AA198:#EEE8D5:#002B36:#CB4B16:#586E75:#657B83:#839496:#6C71C4:#93A1A1:#FDF6E3"
-        gconftool-2 --set "/apps/gnome-terminal/profiles/Default/background_color" --type string "#002B36"
-        gconftool-2 --set "/apps/gnome-terminal/profiles/Default/foreground_color" --type string "#657B83"
-    fi
-}
- 
-light() {
-    # Use the Solarized Light Color Scheme
-    # Set consoleconsole colors to Solarized (light) Colors by overriding the defaults
-    if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        gconftool-2 --set "/apps/gnome-terminal/profiles/Default/palette" --type string "#859900:#2aa198:#268bd2:#6c71c4:#d33682:#dc322f:#cb4b16:#b58900:#fdf6e3:#eee8d5:#93a1a1:#839496:#657b83:#586e75:#073642:#002b36"
-        gconftool-2 --set "/apps/gnome-terminal/profiles/Default/background_color" --type string "#FDF6E3"
-        gconftool-2 --set "/apps/gnome-terminal/profiles/Default/foreground_color" --type string "#839496"
-    fi
-}
-
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    gconftool-2 --set "/apps/gnome-terminal/profiles/Default/use_theme_colors" --type bool false
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Lets get GNU Coreutils to give us pretty dircolors
-test -e ~/.dircolors && eval `dircolors -b ~/.dircolors`
+#==============================================================================
+#  Shell Key Bindings
+#==============================================================================
+
+# Use vim commands in the ZLE
+bindkey -v
+
+# Display the vi mode in the RPROMPT
+zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{yellow}--- COMMAND ---%f'
+zstyle ':prezto:module:editor:info:completing' format '%F{green}...%f'
+RPROMPT='${editor_info[keymap]}'
+
+# Make mac delete key work as expected
+#stty erase ^H
+
+# Map 'jj' to ESC when in insert mode
+bindkey -M viins 'jj' vi-cmd-mode
+
+#==============================================================================
+#  Aliases 
+#==============================================================================
+
+# Recursively remove all those pesky .DS_Store files
+alias rmDS="find ./ -name ".DS_Store" -depth -exec rm {} \;"
+
+# Easy Config Editing
+alias zshconfig="vim ~/.zshrc"
+alias zshenv="vim ~/.zshenv"
+alias vimconfig="vim ~/.vimrc"
+alias dotfiles="cd ~/config/dot-files && vim"
+alias sshconfig="vim ~/.ssh/config"
+
+# Eclipse
+alias eclipse="open -a Eclipse.app"
