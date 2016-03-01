@@ -19,7 +19,6 @@ bindkey -v
 
 # Display the vi mode in the RPROMPT
 zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{yellow}--- COMMAND ---%f'
-zstyle ':prezto:module:editor:info:completing' format '%F{green}...%f'
 RPROMPT='${editor_info[keymap]}'
 
 # Make mac delete key work as expected
