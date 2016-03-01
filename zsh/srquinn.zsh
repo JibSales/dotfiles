@@ -28,18 +28,17 @@ RPROMPT='${editor_info[keymap]}'
 bindkey -M viins 'jj' vi-cmd-mode
 
 #==============================================================================
-#  Aliases 
+#  Aliases
 #==============================================================================
 
 # Recursively remove all those pesky .DS_Store files
 alias rmDS="find ./ -name ".DS_Store" -depth -exec rm {} \;"
 
 # Easy Config Editing
-alias zshconfig="vim ~/.zshrc"
+alias zshrc="vim ~/.zshrc"
 alias zshenv="vim ~/.zshenv"
+alias zshprofile="vim ~/.zprofile"
+alias prezto="vim ~/.zpreztorc"
 alias vimconfig="vim ~/.vimrc"
-alias dotfiles="cd ~/config/dot-files && vim"
+alias dotfiles="cd ~/.config/dot-files && vim"
 alias sshconfig="vim ~/.ssh/config"
-
-# Eclipse
-alias eclipse="open -a Eclipse.app"
