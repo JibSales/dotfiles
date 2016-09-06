@@ -2,6 +2,7 @@
 # Executes commands at login post-zshrc.
 #
 # Authors:
+#   Sean R. Quinn <srquinn21@gmail.com>
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
@@ -13,11 +14,3 @@
     zcompile "$zcompdump"
   fi
 } &!
-
-# Print a random, hopefully interesting, adage.
-if (( $+commands[fortune] )); then
-  if [[ -t 0 || -t 1 ]]; then
-    fortune -s
-    print
-  fi
-fi

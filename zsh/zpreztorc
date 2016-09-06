@@ -2,8 +2,8 @@
 # Sets Prezto options.
 #
 # Authors:
+#   Sean R. Quinn <srquinn21@gmail.com>
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
-#   Sean R. Quinn <srquinn@amazon.com>
 
 #
 # General
@@ -87,6 +87,10 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
 zstyle ':prezto:module:prompt' theme 'agnoster'
+
+# Display the vi mode in the RPROMPT
+zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{yellow}--- COMMAND ---%f'
+RPROMPT='${editor_info[keymap]}'
 
 #
 # Ruby

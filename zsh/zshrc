@@ -2,7 +2,7 @@
 # Executes commands at the start of an interactive session.
 #
 # Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#   Sean R. Quinn <srquinn21@gmail.com>
 #
 
 # Source Prezto.
@@ -16,10 +16,6 @@ fi
 
 # Use vim commands in the ZLE
 bindkey -v
-
-# Display the vi mode in the RPROMPT
-zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{yellow}--- COMMAND ---%f'
-RPROMPT='${editor_info[keymap]}'
 
 # Make mac delete key work as expected
 #stty erase ^H
@@ -36,9 +32,49 @@ alias rmDS="find ./ -name ".DS_Store" -depth -exec rm {} \;"
 
 # Easy Config Editing
 alias zshrc="vim ~/.zshrc"
+alias zshamz="vim ~/.zshrc-amazon"
+alias zshprime="vim ~/.zshrc-primeair"
 alias zshenv="vim ~/.zshenv"
 alias zshprofile="vim ~/.zprofile"
 alias prezto="vim ~/.zpreztorc"
 alias vimconfig="vim ~/.vimrc"
 alias dotfiles="cd ~/.config/dot-files && vim"
 alias sshconfig="vim ~/.ssh/config"
+
+# Docker Machine
+function dmev () {
+  local machine="${1:-default}"
+  echo "loading environment for docker-machine [$machine]\n"
+  eval "$(docker-machine env $machine)"
+  docker-machine ls
+}
+
+alias dmls='docker-machine ls'
+alias dmst='docker-machine start $1'
+alias dmsp='docker-machine stop $1'
+alias dmrs='docker-machine restart $1'
+
+# Docker Client
+alias dka='docker kill $(docker ps -aq)'
+alias dra='docker rm $(docker ps -aq)'
+alias dps='docker ps'
+alias dpS='docker ps -a'
+
+#==============================================================================
+#  Dynamic ENV variables
+#  NOTE: Only add here if you need these to resolve dynamically otherwise
+#  exports should go in the $HOME/.zshenv file
+#============================================================================== 
+export PHANTOMJS_BIN=$(which phantomjs)
+
+#==============================================================================
+#  Imports
+#==============================================================================
+
+if [[ -f "${HOME}/.zshrc-amazon" ]]; then
+  source "${HOME}/.zshrc-amazon"
+fi
+
+if [[ -f "${HOME}/.zshrc-primeair" ]]; then
+  source "${HOME}/.zshrc-primeair"
+fi

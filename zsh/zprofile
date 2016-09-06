@@ -2,8 +2,8 @@
 # Executes commands at login pre-zshrc.
 #
 # Authors:
+#   Sean R. Quinn <srquinn21@gmail.com>
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
-#   Sean R. Quinn <srquinn@amazon.com>
 #
 
 #
@@ -44,7 +44,12 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  $HOME/bin
   /usr/local/{bin,sbin}
+  /apollo/env/SDETools/bin
+  $HOME/utils/AdnAdtlmTools/bin
+  $HOME/utils/AdnDockerTools/bin
+  /usr/local/opt/coreutils/libexec/gnubin
   $path
 )
 
@@ -73,3 +78,9 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+
+#
+# Node Version Manager
+#
+export NVM_DIR=~/.nvm
+. $(brew --prefix nvm)/nvm.sh

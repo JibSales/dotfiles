@@ -40,15 +40,16 @@ Plugin 'tpope/vim-fugitive'                 "Git Helper
 Plugin 'tpope/vim-surround'                 "Text wrapping helper
 Plugin 'ctrlpvim/ctrlp.vim'                 "Fuzzy file finder
 Plugin 'bling/vim-airline'                  "Status bar/tabline
+Plugin 'editorconfig/editorconfig-vim'      "Project level editor config
 Plugin 'altercation/vim-colors-solarized'   "Because science
 Plugin 'Valloric/YouCompleteMe'             "Tab Completion
 "Plugin 'marijnh/tern_for_vim'               "Ternjs support
-Plugin 'ervandew/eclim'                     "Headless eclipse integration
 Plugin 'docunext/closetag.vim'              "Close tags with ease
 Plugin 'pangloss/vim-javascript'            "Javascript syntax
 Plugin 'scrooloose/nerdcommenter'           "Add/remove comments
 Plugin 'burnettk/vim-angular'               "Angular tag lib
 Plugin 'gabrielelana/vim-markdown'          "Markdown syntax highlighting
+Plugin 'raimondi/delimitMate'               "Indent and close brackets
 
 "------------------------------------------------------------------------------
 " Vundle Plugin Configuration (cont.)
@@ -56,10 +57,10 @@ Plugin 'gabrielelana/vim-markdown'          "Markdown syntax highlighting
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
+filetype on
+filetype plugin on
+filetype indent on
+
 " Brief help
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
@@ -98,7 +99,7 @@ colorscheme solarized
 "------------------------------------------------------------------------------
 
 set autoindent             " automatic indent new lines
-set copyindent             " copy the previous indentation on autoindenting
+"set copyindent             " copy the previous indentation on autoindenting
 set smartindent            " be smart about it
 set nowrap                 " do not wrap lines
 set tabstop=2
@@ -119,6 +120,7 @@ autocmd BufNewFile,BufRead *.zsh,*.zsh-* set filetype=zsh
 autocmd FileType gitcommit set wrap linebreak
 " HTML Files
 "autocmd BufNewFile,BufReadPost *.jsp set filetype=html
+"autocmd FileType html set indent on
 
 "------------------------------------------------------------------------------
 " Visual
@@ -202,6 +204,7 @@ autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 "------------------------------------------------------------------------------
 " CtrlP Config
