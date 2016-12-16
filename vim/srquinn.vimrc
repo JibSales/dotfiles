@@ -1,214 +1,140 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
 
 "------------------------------------------------------------------------------
-" Vundle Plugin Management
+" General Config
 "------------------------------------------------------------------------------
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set number                      " Line numbers are good
+set backspace=indent,eol,start  " Allow backspace in insert mode
+set history=1000                " Store lots of :cmdline history
+set showcmd                     " Show incomplete cmds down the bottom
+set showmode                    " Show current mode down the bottom
+set gcr=a:blinkon0              " Disable cursor blink
+set visualbell                  " No sounds
+set autoread                    " Reload files changed outside vim
+set ruler                       " Its good to know your position
+set showmatch                   " set show matching parenthesis
+set mat=5                       " duration to show paren match 1/10 sec
 
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" This makes vim act like all other editors, buffers can
+" exist in the background without being in a window.
+" http://items.sjbach.com/319/configuring-vim-right
+set hidden
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-"Plugin 'user/L9', {'name': 'newL9'}
-
-"------------------------------------------------------------------------------
-" Installed Plugins
-"------------------------------------------------------------------------------
-
-Plugin 'scrooloose/nerdtree'		        "File System Explorer
-Plugin 'tpope/vim-fugitive'                 "Git Helper
-Plugin 'tpope/vim-surround'                 "Text wrapping helper
-Plugin 'ctrlpvim/ctrlp.vim'                 "Fuzzy file finder
-Plugin 'bling/vim-airline'                  "Status bar/tabline
-Plugin 'editorconfig/editorconfig-vim'      "Project level editor config
-Plugin 'altercation/vim-colors-solarized'   "Because science
-Plugin 'Valloric/YouCompleteMe'             "Tab Completion
-"Plugin 'marijnh/tern_for_vim'               "Ternjs support
-Plugin 'docunext/closetag.vim'              "Close tags with ease
-Plugin 'pangloss/vim-javascript'            "Javascript syntax
-Plugin 'scrooloose/nerdcommenter'           "Add/remove comments
-Plugin 'burnettk/vim-angular'               "Angular tag lib
-Plugin 'gabrielelana/vim-markdown'          "Markdown syntax highlighting
-Plugin 'raimondi/delimitMate'               "Indent and close brackets
-
-"------------------------------------------------------------------------------
-" Vundle Plugin Configuration (cont.)
-"------------------------------------------------------------------------------
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype on
-filetype plugin on
-filetype indent on
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-
-"------------------------------------------------------------------------------
-" General
-"------------------------------------------------------------------------------
-
-set hidden			 		" Ignore unsaved buffers when opening new file
-set history=1000			" Keep lots of command history
-set term=xterm-256color
-set termencoding=utf-8
-set backspace=indent,eol,start
-set mouse=a
-
-" Set Swap and Backup directory to something to avoid network overhead when
-" working on network shares.
-set directory=~/.vim/swaps
-set backupdir=~/.vim/backups
-
-"------------------------------------------------------------------------------
-" Syntax Highlighting and Colors
-"------------------------------------------------------------------------------
-
-set t_Co=256
-syntax enable
-set background=dark
-colorscheme solarized
-
-"------------------------------------------------------------------------------
-" Format
-"------------------------------------------------------------------------------
-
-set autoindent             " automatic indent new lines
-"set copyindent             " copy the previous indentation on autoindenting
-set smartindent            " be smart about it
-set nowrap                 " do not wrap lines
-set tabstop=2
-set shiftwidth=2           " ..
-set expandtab              " expand tabs to spaces
-set nosmarttab             " fuck tabs
-
-"------------------------------------------------------------------------------
-" Format (by extension)
-"------------------------------------------------------------------------------
-
-" Markdown files
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-autocmd FileType markdown set wrap linebreak
-" Better zsh support
-autocmd BufNewFile,BufRead *.zsh,*.zsh-* set filetype=zsh
-" Git commits
-autocmd FileType gitcommit set wrap linebreak
-" HTML Files
-"autocmd BufNewFile,BufReadPost *.jsp set filetype=html
-"autocmd FileType html set indent on
-
-"------------------------------------------------------------------------------
-" Visual
-"------------------------------------------------------------------------------
-
-set number                 " always show line numbers
-set ruler                  " Its good to know your position
-set showmatch              " set show matching parenthesis
-set mat=5                  " duration to show paren match 1/10 sec
+"turn on syntax highlighting
+syntax on
 
 "------------------------------------------------------------------------------
 " Key Mappings
 "------------------------------------------------------------------------------
 
 " Change the <leader> to something more reachable
-:let mapleader = ","
+" The mapleader has to be set before vundle starts loading all
+" the plugins.
+let mapleader = ","
 
 " ESC is too far away!
-:imap jj <Esc>
-
-" Toggle Light/Dark color theme
-:map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+imap jj <Esc>
 
 "------------------------------------------------------------------------------
-" NERDTree Config
+" Vundle Initialization
 "------------------------------------------------------------------------------
 
-" Map CTRL-N to NERDTree toggle
-map <silent> <C-n> :NERDTreeToggle<CR>
-
-" Show hidden files
-let NERDTreeShowHidden=1
-
-" Filter files by extension
-let NERDTreeIgnore=['\.DS_Store$','\.git$']
-
-" Set space bar for selection
-let NERDTreeMapActivateNode='<space>'
-
-" Set shift space bar for opening in tab
-let NERDTreeMapOpenInTab='<S-space>'
-
-" Close NERDTree when file is opened
-let NERDTreeQuitOnOpen=1
-
-" Start NERDTree on open
-autocmd VimEnter * if !argc() | NERDTree | endif
-
-" Close NERDTree when its the last buffer
-function! NERDTreeQuit()
-  redir => buffersoutput
-  silent buffers
-  redir END
-"                     1BufNo  2Mods.     3File           4LineNo
-  let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
-  let windowfound = 0
-
-  for bline in split(buffersoutput, "\n")
-    let m = matchlist(bline, pattern)
-
-    if (len(m) > 0)
-      if (m[2] =~ '..a..')
-        let windowfound = 1
-      endif
-    endif
-  endfor
-
-  if (!windowfound)
-    quitall
-  endif
-endfunction
-autocmd WinEnter * call NERDTreeQuit()
-
-" move tabs to the end for new, single buffers (exclude splits)
-autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
+" This loads all the plugins specified in ~/.vim/vundles.vim
+" Use Vundle plugin to manage all other plugins
+if filereadable(expand("~/.vim/vundles.vim"))
+  source ~/.vim/vundles.vim
+endif
+au BufNewFile,BufRead *.vundle set filetype=vim
 
 "------------------------------------------------------------------------------
-" Airline Config
+" Turn Off Swap Files
 "------------------------------------------------------------------------------
 
-set laststatus=2
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
+set noswapfile    " NOTE: Maybe this isn't a good idea? We'll see if it bites me
+set nobackup
+set nowb
 
 "------------------------------------------------------------------------------
-" CtrlP Config
+" Indentation
 "------------------------------------------------------------------------------
 
-let g:ctrlp_map='<c-p>'
-let g:ctrlp_cmd = 'CtrlPMRU'
+set autoindent
+set smartindent
+set smarttab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
+
+" Auto indent pasted text
+" nnoremap p p=`]<C-o>
+" nnoremap P P=`]<C-o>
+
+filetype plugin on
+filetype indent on
+
+" Display tabs and trailing spaces visually
+set list listchars=tab:\ \ ,trail:·
+
+set nowrap       " Don't wrap lines
+set linebreak    " Wrap lines at convenient points
+
+"------------------------------------------------------------------------------
+" Folds
+"------------------------------------------------------------------------------
+
+set foldmethod=indent   " fold based on indent
+set foldnestmax=3       " deepest fold is 3 levels
+set nofoldenable        " dont fold by default
+
+"------------------------------------------------------------------------------
+" Completion
+"------------------------------------------------------------------------------
+
+set wildmode=list:longest
+set wildmenu                   " enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~    " stuff to ignore when tab completing
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
+
+------------------------------------------------------------------------------
+" Scrolling
+"------------------------------------------------------------------------------
+
+set scrolloff=8           " Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
+
+"------------------------------------------------------------------------------
+" Search
+"------------------------------------------------------------------------------
+
+set incsearch       " Find the next match as we type the search
+set hlsearch        " Highlight searches by default
+set ignorecase      " Ignore case when searching...
+set smartcase       " ...unless we type a capital
+
+"------------------------------------------------------------------------------
+" Plugin Settings
+"------------------------------------------------------------------------------
+" Plugin specific settings by name
+
+so ~/.dotfiles/vim/settings.vim
+
+"------------------------------------------------------------------------------
+" Experimental Settings
+"------------------------------------------------------------------------------
+" These settings are ignored by VCS and meant as a sandbox to try new things
+
+"so ~/.dotfiles/vim/extras.vim
