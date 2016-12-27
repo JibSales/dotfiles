@@ -1,0 +1,5 @@
+zsh
+ctags
+git
+tmux
+the_silver_searcher
