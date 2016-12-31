@@ -1,6 +1,4 @@
-Bundle "justinmk/vim-sneak"
-Bundle "rking/ag.vim"
+Bundle "mileszs/ack.vim"
 Bundle "henrik/vim-indexed-search"
 Bundle "nelstrom/vim-visual-star-search"
 Bundle "skwp/greplace.vim"
-Bundle "Lokaltog/vim-easymotion"
