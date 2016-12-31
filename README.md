@@ -1,4 +1,16 @@
-#Dotfiles
+##Usage
 
-##DO NOT COPY ME!!!
-Dotfiles are personal. These are my preferences, you certainly have your own. Feel free to copy/paste, but take a moment to understand exactly what these configurations will do to your environment so you know how to adapt/debug.
+####Install
+Clone the package to `$HOME/.dotfiles` and run the `install.sh` script.
+
+####Configure Git
+Add a `.gitconfig.user` file with a name and email.
+
+####Configure OSX
+* Setup iTerm default profile to use Solarized Dark and desired powerline font
+* Map `CAPSLOCK` to `CONTROL` for both internal and external keyboards
+
+##To Do
+* Linux package support
+* Version controlled iTerm profiles
+* Applescript folder
