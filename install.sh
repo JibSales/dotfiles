@@ -3,6 +3,7 @@ set -e
 
 dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# Some local utility functions
 function symlink_files {
   for file in $1; do
     echo "Symlinking $file --> .$(basename $file)"
@@ -10,22 +11,26 @@ function symlink_files {
   done
 }
 
+function already_installed {
+  echo "$1 is already installed. Skipping..."
+}
+
 function install_homebrew {
   echo
   echo "====================================================="
-  echo " Installing Homebrew"
+  echo "Installing Homebrew"
   echo "====================================================="
 
   local brew=$(which brew)
   if [ $? == 0 ]; then
-    echo "Already installed. Continuing..."
+    already_installed "brew"
   else
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
 
   echo
   echo "====================================================="
-  echo " Updating Homebrew"
+  echo "Updating Homebrew"
   echo "====================================================="
   brew update
   echo "DONE"
@@ -34,17 +39,17 @@ function install_homebrew {
 function install_packages {
   echo
   echo "====================================================="
-  echo " Installing packages"
+  echo "Installing packages"
   echo "====================================================="
-  local packages=
   if [[ $OSTYPE == darwin* ]]; then
-    for package in $(cat $dotfiles_dir/packages/osx.txt | tr '\n' ' '); do
+    while read install_string; do
+      local package=$(echo $install_string | awk '{ print $1 };')
       if brew ls --versions $package > /dev/null; then
-        echo "$package is already installed. Skipping..."
+        already_installed $package
       else
-        brew install $package
+        brew install $install_string
       fi
-    done
+    done <$dotfiles_dir/packages/osx.txt
   fi
   echo "DONE"
 }
@@ -52,12 +57,12 @@ function install_packages {
 function install_applications {
   echo
   echo "====================================================="
-  echo " Installing Applications"
+  echo "Installing Applications"
   echo "====================================================="
   brew tap caskroom/cask
   for application in $(cat $dotfiles_dir/packages/applications.txt | tr '\n' ' '); do
     if brew cask ls --versions $application > /dev/null; then
-      echo "$application is already installed. Skipping..."
+      already_installed $application
     else
       brew cask install $application 2>/dev/null
     fi
@@ -68,7 +73,7 @@ function install_applications {
 function install_vim_config {
   echo
   echo "====================================================="
-  echo " Installing Vim Configuration"
+  echo "Installing Vim Configuration"
   echo "====================================================="
 
   ln -nfs $dotfiles_dir/vim $HOME/.vim
@@ -90,7 +95,7 @@ function install_vim_config {
 function set_zsh_to_default_shell {
   echo
   echo "====================================================="
-  echo " Setting zsh to the default shell"
+  echo "Setting zsh to the default shell"
   echo "====================================================="
 
   if [[ $SHELL == *"zsh" ]]; then
@@ -113,7 +118,7 @@ function set_zsh_to_default_shell {
 function install_zsh_config {
   echo
   echo "====================================================="
-  echo " Installing zsh configuration"
+  echo "Installing zsh configuration"
   echo "====================================================="
 
   if [ ! -d $HOME/.zgen ]; then
@@ -153,7 +158,7 @@ function install_iterm_solarized_theme {
   local solarized_dark=$(/usr/libexec/PlistBuddy -c "Print 'Custom Color Presets':'Solarized Dark'" $plist_file 2>/dev/null)
 
   if [[ ! $solarized_light == 0 ]]; then
-    echo "Solarized Light is already installed"
+    already_installed "Solarized Light"
   else
     local key_path=":'Custom Color Presets':'Solarized Light'"
     local file="$dotfiles_dir/iTerm2/Solarized Light.itermcolors"
@@ -161,7 +166,7 @@ function install_iterm_solarized_theme {
     /usr/libexec/PlistBuddy -c "Merge '$file' $key_path" $plist_file
   fi
   if [[ ! $solarized_dark == 0 ]]; then
-    echo "Solarized Dark is already installed"
+    already_installed "Solarized Dark"
   else
     local key_path=":'Custom Color Presets':'Solarized Dark'"
     local file="$dotfiles_dir/iTerm2/Solarized Dark.itermcolors"
@@ -178,10 +183,11 @@ function install_iterm_solarized_theme {
 
 echo
 echo "======================================================"
-echo " Installing Dotfiles"
+echo "Installing Dotfiles"
 echo "======================================================"
 
 symlink_files $dotfiles_dir
+echo "DONE"
 
 if [[ $OSTYPE == darwin* ]]; then
   install_homebrew
@@ -196,14 +202,9 @@ install_fonts
 
 echo
 echo "======================================================"
-echo " Adding miscellaneous configurations"
+echo "Adding miscellaneous configurations"
 echo "======================================================"
 symlink_files $dotfiles_dir/git/*
 symlink_files $dotfiles_dir/ctags/*
 symlink_files $dotfiles_dir/tmux/*
 echo "DONE"
-
-echo
-echo "======================================================"
-echo " Finished Installing Dotfiles. Restart your session."
-echo "======================================================"

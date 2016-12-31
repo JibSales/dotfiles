@@ -3,3 +3,5 @@ ctags
 git
 tmux
 the_silver_searcher
+macvim --with-cscope --with-lua
+neovim/neovim/neovim
