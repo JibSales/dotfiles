@@ -10,12 +10,6 @@ function symlink_files {
   done
 }
 
-function copy_files {
-  for file in $1; do
-    cp -f $file $HOME/.$file
-  done
-}
-
 function install_homebrew {
   echo
   echo "====================================================="
@@ -65,7 +59,7 @@ function install_applications {
     if brew cask ls --versions $application > /dev/null; then
       echo "$application is already installed. Skipping..."
     else
-      brew cask install $applications 2>/dev/null
+      brew cask install $application 2>/dev/null
     fi
   done
   echo "DONE"
@@ -122,7 +116,7 @@ function install_zsh_config {
   echo " Installing zsh configuration"
   echo "====================================================="
 
-  if [ -f $HOME/.zgen ]; then
+  if [ ! -d $HOME/.zgen ]; then
     git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
   fi
 
@@ -186,6 +180,8 @@ echo
 echo "======================================================"
 echo " Installing Dotfiles"
 echo "======================================================"
+
+symlink_files $dotfiles_dir
 
 if [[ $OSTYPE == darwin* ]]; then
   install_homebrew
