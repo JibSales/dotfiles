@@ -3,23 +3,42 @@ set -e
 
 dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Some local utility functions
+###############################################################################
+# UTILITIES
+###############################################################################
+
 function symlink_files {
   for file in $1; do
-    echo "Symlinking $file --> .$(basename $file)"
+    echo -e "\033[0;33mSymlinking\033[0m $file \033[0;35m-->\033[0m .$(basename $file)"
     ln -nfs $file $HOME/.$(basename $file)
   done
 }
 
-function already_installed {
-  echo "$1 is already installed. Skipping..."
+function log_info {
+  echo -e "\033[0;34m$1\033[0m"
 }
 
-function install_homebrew {
+function banner {
   echo
-  echo "====================================================="
-  echo "Installing Homebrew"
-  echo "====================================================="
+  echo -e "\033[0;34m=====================================================\033[0m"
+  echo -e "\033[0;33m$@\033[0m"
+  echo -e "\033[0;34m=====================================================\033[0m"
+}
+
+function log_done {
+  echo -e "\033[0;35m$1\033[0m"
+}
+
+function already_installed {
+  echo -e "\033[0;33m$1 is already installed.\033[0m Skipping..."
+}
+
+###############################################################################
+# TASKS
+###############################################################################
+
+function install_homebrew {
+  banner "Installing Homebrew"
 
   local brew=$(which brew)
   if [ $? == 0 ]; then
@@ -28,19 +47,13 @@ function install_homebrew {
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
 
-  echo
-  echo "====================================================="
-  echo "Updating Homebrew"
-  echo "====================================================="
+  banner "Updating Homebrew"
   brew update
-  echo "DONE"
+  log_done "DONE"
 }
 
 function install_packages {
-  echo
-  echo "====================================================="
-  echo "Installing packages"
-  echo "====================================================="
+  banner "Installing packages"
   if [[ $OSTYPE == darwin* ]]; then
     while read install_string; do
       local package=$(echo $install_string | awk '{ print $1 };')
@@ -51,14 +64,11 @@ function install_packages {
       fi
     done <$dotfiles_dir/packages/osx.txt
   fi
-  echo "DONE"
+  log_done "DONE"
 }
 
 function install_applications {
-  echo
-  echo "====================================================="
-  echo "Installing Applications"
-  echo "====================================================="
+  banner "Installing Applications"
   brew tap caskroom/cask
   for application in $(cat $dotfiles_dir/packages/applications.txt | tr '\n' ' '); do
     if brew cask ls --versions $application > /dev/null; then
@@ -67,14 +77,11 @@ function install_applications {
       brew cask install $application 2>/dev/null
     fi
   done
-  echo "DONE"
+  log_done "DONE"
 }
 
 function install_vim_config {
-  echo
-  echo "====================================================="
-  echo "Installing Vim Configuration"
-  echo "====================================================="
+  banner "Installing Vim Configuration"
 
   ln -nfs $dotfiles_dir/vim $HOME/.vim
   ln -nfs $dotfiles_dir/vim/vimrc $HOME/.vimrc
@@ -89,14 +96,11 @@ function install_vim_config {
   # Update vundle
   vim --noplugin -u $HOME/.vim/vundles.vim -N \"+set hidden\" \"+syntax on\" +BundleClean +BundleInstall! +qall
 
-  echo "DONE"
+  log_done "DONE"
 }
 
 function set_zsh_to_default_shell {
-  echo
-  echo "====================================================="
-  echo "Setting zsh to the default shell"
-  echo "====================================================="
+  banner "Setting zsh to the default shell"
 
   if [[ $SHELL == *"zsh" ]]; then
     echo "Zsh is already configured"
@@ -112,14 +116,11 @@ function set_zsh_to_default_shell {
       chsh -s /bin/zsh
     fi
   fi
-  echo "DONE"
+  log_done "DONE"
 }
 
 function install_zsh_config {
-  echo
-  echo "====================================================="
-  echo "Installing zsh configuration"
-  echo "====================================================="
+  banner "Installing zsh configuration"
 
   if [ ! -d $HOME/.zgen ]; then
     git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
@@ -127,14 +128,11 @@ function install_zsh_config {
 
   ln -nfs $dotfiles_dir/zsh/zshrc $HOME/.zshrc
 
-  echo "DONE"
+  log_done "DONE"
 }
 
 function install_fonts {
-  echo
-  echo "======================================================"
-  echo "Installing patched fonts for Powerline/Lightline."
-  echo "======================================================"
+  banner "Installing patched fonts for Powerline/Lightline."
 
   if [[ $OSTYPE == darwin* ]]; then
     cp -f $dotfiles_dir/fonts/* $HOME/Library/Fonts
@@ -143,14 +141,11 @@ function install_fonts {
   if [[ $OSTYPE == linux* ]]; then
     mkdir -p ~/.fonts && cp $dotfiles_dir/fonts/* ~/.fonts && fc-cache -vf ~/.fonts
   fi
-  echo "DONE"
+  log_done "DONE"
 }
 
 function install_iterm_solarized_theme {
-  echo
-  echo "======================================================"
-  echo "Installing iTerm2 solarized theme."
-  echo "======================================================"
+  banner "Installing iTerm2 solarized theme."
 
   # Query and save the value; suppress any error message, if key not found.
   local plist_file=$HOME/Library/Preferences/com.googlecode.iterm2.plist
@@ -173,7 +168,7 @@ function install_iterm_solarized_theme {
     /usr/libexec/PlistBuddy -c "Add $key_path dict" $plist_file
     /usr/libexec/PlistBuddy -c "Merge '$file' $key_path" $plist_file
   fi
-  echo "DONE"
+  log_done "DONE"
 }
 
 
@@ -181,13 +176,9 @@ function install_iterm_solarized_theme {
 #  Task Runner
 ###############################################################################
 
-echo
-echo "======================================================"
-echo "Installing Dotfiles"
-echo "======================================================"
-
+banner "Installing Dotfiles"
 symlink_files $dotfiles_dir
-echo "DONE"
+log_done "DONE"
 
 if [[ $OSTYPE == darwin* ]]; then
   install_homebrew
@@ -200,11 +191,8 @@ set_zsh_to_default_shell
 install_zsh_config
 install_fonts
 
-echo
-echo "======================================================"
-echo "Adding miscellaneous configurations"
-echo "======================================================"
+banner "Adding miscellaneous configurations"
 symlink_files $dotfiles_dir/git/*
 symlink_files $dotfiles_dir/ctags/*
 symlink_files $dotfiles_dir/tmux/*
-echo "DONE"
+log_done "DONE"
