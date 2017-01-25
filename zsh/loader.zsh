@@ -1,4 +1,4 @@
-echo "Creating a zgen save"
+echo -e "\033[36mCreating a zgen init...\e[0m"
 
 # prezto and modules
 zgen prezto
@@ -23,3 +23,5 @@ zgen load zsh-users/zsh-history-substring-search
 
 # save all to the init script
 zgen save
+
+echo -e "\033[36m[DONE]\e[0m"
