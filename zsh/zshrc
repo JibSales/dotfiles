@@ -8,18 +8,21 @@ path=(
   $path
 )
 
+export DOTFILES=$HOME/.dotfiles
+export DOTFILES_LOCAL=$HOME/.dotfiles-local
+
 # if the init scipt doesn't exist
 if ! zgen saved; then
-  source "${HOME}/.dotfiles/zsh/loader.zsh"
+  source "${DOTFILES}/zsh/loader.zsh"
 fi
 
 # Source the local stuff
-for module in $HOME/.dotfiles/zsh/modules/*.zsh; do
+for module in $DOTFILES/zsh/modules/*.zsh; do
   source $module
 done
 
-for module in $HOME/.dotfiles-local/zsh/*.zsh; do
-  source $module
-done
-
-
+if [ -d $DOTFILES_LOCAL/zsh ]; then
+  for module in $DOTFILES_LOCAL/zsh/*.zsh; do
+    source $module
+  done
+fi
