@@ -87,6 +87,7 @@
   svnr = svn rebase
   svnd = svn dcommit
   svnl = svn log --oneline --show-commit
+	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
 [format]
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 [mergetool]
@@ -110,6 +111,7 @@
   autocrlf = false
   editor = vim
 	excludesfile = /Users/srquinn/.gitignore
+	pager = less -FMRiX
 [advice]
   statusHints = false
 [diff]
@@ -123,6 +125,6 @@
   enabled = true
 [include]
   path = .gitconfig.user
-[amazon]
-	append-cr-url = true
-	pull-request-by-default = true
+[user]
+	email = srquinn@amazon.com
+	name = Sean Quinn

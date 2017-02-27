@@ -21,6 +21,14 @@ zgen prezto archive
 zgen load zsh-users/zsh-syntax-highlighting
 zgen load zsh-users/zsh-history-substring-search
 
+# load local plugins
+# zgen load ./modules/colors.zsh
+# zgen load ./modules/docker.zsh
+# zgen load ./modules/helpers.zsh
+# zgen load ./modules/key-bindings.zsh
+# zgen load ./modules/nvm.zsh
+# zgen load ./modules/phantomjs.zsh
+
 # save all to the init script
 zgen save
 
