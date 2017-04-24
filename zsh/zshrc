@@ -18,6 +18,7 @@ path=(
   $HOME/bin
   $DOTFILES/bin
   $DOTFILES_LOCAL/bin
+  $HOME/.rbenv/bin
   $path
 )
 
