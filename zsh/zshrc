@@ -1,19 +1,63 @@
-# load zgen
-source "${HOME}/.zgen/zgen.zsh"
+#
+# Source envImprovement
+#
+
+if [[ -d "/apollo/env/envImprovement" ]]; then
+  source /apollo/env/envImprovement/var/zshrc
+fi
+
+#
+# Source Prezto
+#
+
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+#
+# Dotfile Locations
+#
 
 export DOTFILES=$HOME/.dotfiles
 export DOTFILES_LOCAL=$HOME/.dotfiles-local
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-export COMPLETION_WAITING_DOTS="true"
+#
+# Browser
+#
 
-# Correct spelling for commands
-setopt correct
+if [[ "$OSTYPE" == darwin* ]]; then
+  export BROWSER='open'
+fi
 
-# turn off the infernal correctall for filenames
-unsetopt correctall
+#
+# Editors
+#
 
-# set PATH
+export EDITOR='nano'
+export VISUAL='nano'
+export PAGER='less'
+export KEYTIMEOUT=100
+
+#
+# Language
+#
+
+if [[ -z "$LANG" ]]; then
+  export LANG='en_US.UTF-8'
+fi
+
+#
+# Paths
+#
+
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
+
+# Set the the list of directories that cd searches.
+# cdpath=(
+#   $cdpath
+# )
+#
 path=(
   $HOME/bin
   $DOTFILES/bin
@@ -22,6 +66,35 @@ path=(
   $path
 )
 
+#
+# Less
+#
+
+# Set the default Less options.
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+# Remove -X and -F (exit if the content fits on one screen) to enable it.
+export LESS='-F -g -i -M -R -S -w -X -z-4'
+
+# Set the Less input preprocessor.
+# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+if (( $#commands[(i)lesspipe(|.sh)] )); then
+  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
+fi
+
+#
+# Temporary Files
+#
+
+if [[ ! -d "$TMPDIR" ]]; then
+  export TMPDIR="$(mktemp -d)"
+fi
+
+TMPPREFIX="${TMPDIR%/}/zsh"
+
+#
+# LSCOLORS
+#
+
 # Yes, these are a pain to customize. Fortunately, Geoff Greer made an online
 # tool that makes it easy to customize your color scheme and keep them in sync
 # across Linux and OS X/*BSD at http://geoff.greer.fm/lscolors/
@@ -29,29 +102,10 @@ path=(
 export LSCOLORS='Exfxcxdxbxegedabagacad'
 export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 
-# start zgen if the init scipt doesn't exist
-if ! zgen saved; then
-  source "${DOTFILES}/zsh/loader.zsh"
-  if [ -d $DOTFILES_LOCAL/zsh ]; then
-    source "${DOTFILES_LOCAL}/zsh/loader.zsh"
-  fi
-fi
-# end zgen
-
-# DEPRECATE
 #
-# Replace these with proper zgen load commands
-for module in $DOTFILES/zsh/modules/*.zsh; do
-  source $module
-done
+# History
+#
 
-if [ -d $DOTFILES_LOCAL/zsh ]; then
-  for module in $DOTFILES_LOCAL/zsh/*.zsh; do
-    source $module
-  done
-fi
-
-# set some history options
 setopt append_history
 setopt extended_history
 setopt hist_expire_dups_first
@@ -76,11 +130,21 @@ SAVEHIST=100000
 HISTFILE=~/.zsh_history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
-# Long running processes should return time after they complete. Specified
-# in seconds.
+#
+# Long Running Processes
+#
+
+# NOTE: Long running processes should return time after they complete. Specified
+# in seconds. This is here so we can even time zsh functions ;)
+
 REPORTTIME=2
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
+#
+# Globbing
+#
+
+# NOTE: Explore worth of this
 # Expand aliases inline - see http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
 globalias() {
    if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
@@ -96,35 +160,43 @@ bindkey " " globalias
 bindkey "^ " magic-space           # control-space to bypass completion
 bindkey -M isearch " " magic-space # normal space during searches
 
-# Customize to your needs...
-# Stuff that works on bash or zsh
+#
+# Custom module loading
+#
+
+# DEPRECATE: Should be replaced with install script that places in apropriate bucket defined below
+for module in $DOTFILES/zsh/modules/*.zsh; do
+  source $module
+done
+
+# DEPRECATE: Should be replaced with install script that places in apropriate bucket defined below
+if [ -d $DOTFILES_LOCAL/zsh ]; then
+  for module in $DOTFILES_LOCAL/zsh/*.zsh; do
+    source $module
+  done
+fi
+
+#
+# Custom aliases that work on bash or zsh
+#
+
 if [ -r ~/.sh_aliases ]; then
   source ~/.sh_aliases
 fi
 
-# Stuff only tested on zsh, or explicitly zsh-specific
+#
+# Custom aliases only tested on zsh, or explicitly zsh-specific
+#
+
 if [ -r ~/.zsh_aliases ]; then
   source ~/.zsh_aliases
 fi
 
-if [ -r ~/.zsh_functions ]; then
-  source ~/.zsh_functions
-fi
+#
+# Custom OSX only aliases
+#
 
-export LOCATE_PATH=/var/db/locate.database
-
-# Load AWS credentials
-if [ -f ~/.aws/aws_variables ]; then
-  source ~/.aws/aws_variables
-fi
-
-# JAVA setup - needed for iam-* tools
-if [ -d /Library/Java/Home ];then
-  export JAVA_HOME=/Library/Java/Home
-fi
-
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  # We're on osx
+if [[ "$OSTYPE" == darwin* ]]; then
   [ -f ~/.osx_aliases ] && source ~/.osx_aliases
   if [ -d ~/.osx_aliases.d ]; then
     for alias_file in ~/.osx_aliases.d/*
@@ -134,13 +206,10 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   fi
 fi
 
-# Speed up autocomplete, force prefix mapping
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
+#
+# Custom zsh completions
+#
 
-# Load any custom zsh completions we've installed
 if [ -d ~/.zsh-completions ]; then
   for completion in ~/.zsh-completions/*
   do
@@ -148,10 +217,22 @@ if [ -d ~/.zsh-completions ]; then
   done
 fi
 
+#
+# Speed up autocomplete, force prefix mapping
+#
+
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
+
+#
+# Overrides
+#
+
 # Make it easy to append your own customizations that override the above by
 # loading all files from .zshrc.d directory
 mkdir -p ~/.zshrc.d
-
 if [ -n "$(/bin/ls ~/.zshrc.d)" ]; then
   for dotfile in ~/.zshrc.d/*
   do
@@ -161,6 +242,12 @@ if [ -n "$(/bin/ls ~/.zshrc.d)" ]; then
   done
 fi
 
+#
+# Dedupe PATH
+#
+
+# NOTE: Should be called here but should be defined elsewhere
+#
 # In case a plugin adds a redundant path entry, remove duplicate entries
 # from PATH
 #
@@ -181,3 +268,16 @@ dedupe_path() {
 }
 
 dedupe_path
+
+#
+# Increase Statup Speed
+#
+
+# Execute code that does not affect the current session in the background.
+{
+  # Compile the completion dump to increase startup speed.
+  zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+    zcompile "$zcompdump"
+  fi
+} &!

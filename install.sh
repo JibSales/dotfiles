@@ -122,11 +122,11 @@ function set_zsh_to_default_shell {
 function install_zsh_config {
   banner "Installing zsh configuration"
 
-  if [ ! -d $HOME/.zgen ]; then
-    git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
+  if [ ! -d $HOME/.zprezto ]; then
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"
   fi
 
-  ln -nfs $dotfiles_dir/zsh/zshrc $HOME/.zshrc
+  symlink_files "$dotfiles_dir/zsh/z*"
 
   log_done "DONE"
 }
@@ -176,10 +176,6 @@ function install_iterm_solarized_theme {
 #  Task Runner
 ###############################################################################
 
-banner "Installing Dotfiles"
-symlink_files $dotfiles_dir
-log_done "DONE"
-
 if [[ $OSTYPE == darwin* ]]; then
   install_homebrew
   install_applications
@@ -194,5 +190,5 @@ install_fonts
 banner "Adding miscellaneous configurations"
 symlink_files $dotfiles_dir/git/*
 symlink_files $dotfiles_dir/ctags/*
-symlink_files $dotfiles_dir/tmux/*
+# symlink_files $dotfiles_dir/tmux/*
 log_done "DONE"

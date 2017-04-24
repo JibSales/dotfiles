@@ -1,1 +1,3 @@
-export PHANTOMJS_BIN=$(which phantomjs)
+if type phantomjs > /dev/null; then
+  export PHANTOMJS_BIN=$(which phantomjs)
+fi
