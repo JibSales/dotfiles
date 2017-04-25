@@ -190,5 +190,5 @@ install_fonts
 banner "Adding miscellaneous configurations"
 symlink_files $dotfiles_dir/git/*
 symlink_files $dotfiles_dir/ctags/*
-# symlink_files $dotfiles_dir/tmux/*
+symlink_files $dotfiles_dir/tmux/*
 log_done "DONE"
