@@ -10,7 +10,7 @@ dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 function symlink_files {
   for file in $1; do
     dotfile=$HOME/.$(basename $file) 
-    if [ -f "$dotfile" ]; then
+    if [[ -e "$dotfile" && ! -L "$dotfile" ]]; then
       cp $dotfile $dotfile.bckp
     fi
     echo -e "\033[0;33mSymlinking\033[0m $file \033[0;35m-->\033[0m .$(basename $file)"
