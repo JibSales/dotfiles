@@ -9,8 +9,12 @@ dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function symlink_files {
   for file in $1; do
+    dotfile=$HOME/.$(basename $file) 
+    if [ -f "$dotfile" ]; then
+      cp $dotfile $dotfile.bckp
+    fi
     echo -e "\033[0;33mSymlinking\033[0m $file \033[0;35m-->\033[0m .$(basename $file)"
-    ln -nfs $file $HOME/.$(basename $file)
+    ln -nfs $file $dotfile
   done
 }
 
@@ -26,7 +30,7 @@ function banner {
 }
 
 function log_done {
-  echo -e "\033[0;35m$1\033[0m"
+  echo -e "\033[0;35mDONE\033[0m"
 }
 
 function already_installed {
@@ -49,7 +53,7 @@ function install_homebrew {
 
   banner "Updating Homebrew"
   brew update
-  log_done "DONE"
+  log_done
 }
 
 function install_packages {
@@ -64,7 +68,7 @@ function install_packages {
       fi
     done <$dotfiles_dir/packages/osx.txt
   fi
-  log_done "DONE"
+  log_done
 }
 
 function install_applications {
@@ -77,7 +81,7 @@ function install_applications {
       brew cask install $application 2>/dev/null
     fi
   done
-  log_done "DONE"
+  log_done
 }
 
 function install_vim_config {
@@ -96,7 +100,7 @@ function install_vim_config {
   # Update vundle
   vim --noplugin -u $HOME/.vim/vundles.vim -N \"+set hidden\" \"+syntax on\" +BundleClean +BundleInstall! +qall
 
-  log_done "DONE"
+  log_done
 }
 
 function set_zsh_to_default_shell {
@@ -116,7 +120,7 @@ function set_zsh_to_default_shell {
       chsh -s /bin/zsh
     fi
   fi
-  log_done "DONE"
+  log_done
 }
 
 function install_zsh_config {
@@ -128,7 +132,7 @@ function install_zsh_config {
 
   symlink_files "$dotfiles_dir/zsh/z*"
 
-  log_done "DONE"
+  log_done
 }
 
 function install_fonts {
@@ -141,7 +145,7 @@ function install_fonts {
   if [[ $OSTYPE == linux* ]]; then
     mkdir -p ~/.fonts && cp $dotfiles_dir/fonts/* ~/.fonts && fc-cache -vf ~/.fonts
   fi
-  log_done "DONE"
+  log_done
 }
 
 function install_iterm_solarized_theme {
@@ -168,7 +172,7 @@ function install_iterm_solarized_theme {
     /usr/libexec/PlistBuddy -c "Add $key_path dict" $plist_file
     /usr/libexec/PlistBuddy -c "Merge '$file' $key_path" $plist_file
   fi
-  log_done "DONE"
+  log_done
 }
 
 
@@ -191,4 +195,4 @@ banner "Adding miscellaneous configurations"
 symlink_files $dotfiles_dir/git/*
 symlink_files $dotfiles_dir/ctags/*
 symlink_files $dotfiles_dir/tmux/*
-log_done "DONE"
+log_done
