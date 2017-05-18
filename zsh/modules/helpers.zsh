@@ -10,3 +10,7 @@ function kill-all {
   local pattern=$1
   ps -ef | grep $1 | grep -v grep | awk '{print $3}' | xargs kill -9
 }
+
+function disable_fw {
+  while true; do sudo pfctl -d; sleep 1; done
+}
