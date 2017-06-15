@@ -6,7 +6,7 @@ function set_ip {
   echo -e "EXTERNAL_IP set to \033[0;36m$EXTERNAL_IP\033[0m"
 }
 
-function kill-all {
+function kill_all {
   local pattern=$1
   ps -ef | grep $1 | grep -v grep | awk '{print $3}' | xargs kill -9
 }
