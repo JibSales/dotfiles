@@ -7,8 +7,7 @@ function set_ip {
 }
 
 function kill_all {
-  local pattern=$1
-  ps -ef | grep $1 | grep -v grep | awk '{print $3}' | xargs kill -9
+  ps aux | grep $1 | grep -v grep | awk '{print $2}' | xargs kill -9
 }
 
 function disable_fw {

@@ -8,7 +8,7 @@ let g:syntastic_auto_jump=0
 " let g:syntastic_quiet_messages = {'level': 'warnings'}
 "linting javascript
 let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_javascript_jshint_conf = "~/.jshintrc"
+let g:syntastic_javascript_jshint_args = '--config /Users/srquinn/.jshintrc'
 
 "don't lint html cause they don't get angular
 let g:syntastic_html_checkers=['']

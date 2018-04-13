@@ -62,7 +62,9 @@ path=(
   $HOME/bin
   $DOTFILES/bin
   $DOTFILES_LOCAL/bin
+  $HOME/.pyenv/bin
   $HOME/.rbenv/bin
+  /usr/local/sbin
   $path
 )
 
