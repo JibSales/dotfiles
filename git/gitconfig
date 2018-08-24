@@ -32,6 +32,7 @@
   autocrlf = false
   editor = vim
 	pager = less -FMRiX
+	excludesfile = .gitignore
 [advice]
   statusHints = false
 [diff]
@@ -50,5 +51,3 @@
 	name = Sean Quinn
 [alias]
 	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
-[init]
-[commit]
