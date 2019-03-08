@@ -273,3 +273,5 @@ dedupe_path
     zcompile "$zcompdump"
   fi
 } &!
+
+export PATH=$HOME/.toolbox/bin:$PATH

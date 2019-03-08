@@ -1,3 +1,4 @@
+[core]
 [color]
   ui = true
 [color "branch"]
@@ -32,7 +33,7 @@
   autocrlf = false
   editor = vim
 	pager = less -FMRiX
-	excludesfile = .gitignore
+	excludesfile = /home/srquinn/.gitignore
 [advice]
   statusHints = false
 [diff]

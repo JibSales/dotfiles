@@ -1,5 +1,5 @@
 if [[ $OSTYPE == "linux-gnu" ]]; then
-  export DOCKER_HOST=tcp://127.0.0.1:4243
+  source /etc/profile.d/docker_host.sh
 fi
 
 alias dka='docker kill $(docker ps -aq)'
