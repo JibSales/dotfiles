@@ -20,13 +20,13 @@ Bundle "gmarik/vundle"
 " Vundles are split up by category into smaller files
 " This reduces churn and makes it easier to fork. See
 " ~/.vim/vundles/ to edit them:
-runtime languages.vundle
+" runtime languages.vundle
 runtime git.vundle
 runtime appearance.vundle
-runtime textobjects.vundle
-runtime search.vundle
+" runtime textobjects.vundle
+" runtime search.vundle
 runtime project.vundle
-runtime vim-improvements.vundle
+" runtime vim-improvements.vundle
 
 "Filetype plugin indent on is required by vundle
 filetype plugin indent on

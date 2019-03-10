@@ -1,8 +1,5 @@
 zsh
-ctags
 git
 tmux
 nvm
 the_silver_searcher
-macvim --with-cscope --with-lua
-neovim/neovim/neovim

@@ -1,5 +1,5 @@
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'onedark',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
@@ -9,9 +9,7 @@ let g:lightline = {
       \   'readonly': 'MyReadonly',
       \   'filename': 'MyFilename',
       \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-      \ }
+    \ }
 
 function! MyReadonly()
   if &filetype == "help"
@@ -36,5 +34,9 @@ function! MyFilename()
        \ ('' != expand('%') ? expand('%') : '[NoName]')
 endfunction
 
+
 " Use status bar even with single buffer
 set laststatus=2
+
+" Remove default line
+set noshowmode

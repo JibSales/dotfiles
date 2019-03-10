@@ -9,7 +9,7 @@ dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function symlink_files {
   for file in $1; do
-    dotfile=$HOME/.$(basename $file) 
+    dotfile=$HOME/.$(basename $file)
     if [[ -e "$dotfile" && ! -L "$dotfile" ]]; then
       cp $dotfile $dotfile.bckp
     fi
@@ -193,6 +193,5 @@ install_fonts
 
 banner "Adding miscellaneous configurations"
 symlink_files $dotfiles_dir/git/*
-symlink_files $dotfiles_dir/ctags/*
 symlink_files $dotfiles_dir/tmux/*
 log_done

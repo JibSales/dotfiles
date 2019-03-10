@@ -7,32 +7,6 @@
 .Spotlight-V100
 .Trashes
 
-# Windows   taken from: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
-# ----------------------------------------------------------------------------------------------
-# Windows image file caches
-Thumbs.db
-
-# Folder config file
-Desktop.ini
-
-# Tags      taken from: https://github.com/github/gitignore/blob/master/Global/Tags.gitignore
-# ----------------------------------------------------------------------------------------------
-# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
-TAGS
-!TAGS/
-tags
-!tags/
-.tags
-.tags1
-gtags.files
-GTAGS
-GRTAGS
-GPATH
-cscope.files
-cscope.out
-cscope.in.out
-cscope.po.out
-
 # Vim       taken from: https://github.com/github/gitignore/blob/master/Global/vim.gitignore
 # ----------------------------------------------------------------------------------------------
 [._]*.s[a-w][a-z]
@@ -46,4 +20,12 @@ Session.vim
 # ----------------------------------------------------------------------------------------------
 .sass-cache
 
+# IDEA
+# ----------------------------------------------------------------------------------------------
 *.iml
+.idea
+
+# Typical Builds
+# ----------------------------------------------------------------------------------------------
+build
+node_modules

@@ -1,2 +1,3 @@
-Bundle "skwp/vim-colors-solarized"
 Bundle "itchyny/lightline.vim"
+Bundle "sheerun/vim-polyglot"
+Bundle "joshdick/onedark.vim"

@@ -1,6 +1,0 @@
-Bundle "sheerun/vim-polyglot"
-Bundle "jtratner/vim-flavored-markdown.git"
-Bundle "scrooloose/syntastic.git"
-Bundle "skwp/vim-html-escape"
-Bundle "darfink/vim-plist"
-Bundle "alvan/vim-closetag"

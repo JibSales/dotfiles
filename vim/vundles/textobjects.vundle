@@ -1,6 +1,0 @@
-Bundle "kana/vim-textobj-datetime"
-Bundle "kana/vim-textobj-entire"
-Bundle "kana/vim-textobj-function"
-Bundle "kana/vim-textobj-user"
-Bundle "nathanaelkane/vim-indent-guides"
-Bundle "thinca/vim-textobj-function-javascript"
