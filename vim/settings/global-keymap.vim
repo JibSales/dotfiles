@@ -2,12 +2,6 @@
 " General vim sanity improvements
 " ========================================
 
-
-" ,q to toggle quickfix window (where you have stuff like Ag)
-" ,oq to open it back up (rare)
-nmap <silent> ,qc :cclose<CR>
-nmap <silent> ,qo :copen<CR>
-
 "Move back and forth through previous and next buffers
 "with ,z and ,x
 nnoremap <silent> ,z :bp<CR>

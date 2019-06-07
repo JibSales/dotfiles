@@ -33,7 +33,7 @@
   autocrlf = false
   editor = vim
 	pager = less -FMRiX
-	excludesfile = /home/srquinn/.gitignore
+	excludesfile = ~/.gitignore
 [advice]
   statusHints = false
 [diff]

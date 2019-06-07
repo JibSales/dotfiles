@@ -1,7 +1,4 @@
-if (has("termguicolors"))
-  set termguicolors
-endif
-
+let g:onedark_termcolors=16
 colorscheme onedark
 
 " Create a background toggle
