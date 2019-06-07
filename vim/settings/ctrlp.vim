@@ -21,3 +21,6 @@ let g:ctrlp_by_filename = 1
 " Don't jump to already open window. This is annoying if you are maintaining
 " several Tab workspaces and want to open two windows into the same file.
 let g:ctrlp_switch_buffer = 0
+
+" Use 'K' to search for the word under the cursor in command mode
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>

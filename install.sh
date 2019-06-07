@@ -189,7 +189,7 @@ install_packages
 install_vim_config
 set_zsh_to_default_shell
 install_zsh_config
-install_fonts
+#install_fonts
 
 banner "Adding miscellaneous configurations"
 symlink_files $dotfiles_dir/git/*

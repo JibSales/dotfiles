@@ -64,20 +64,12 @@ set nowb
 " Indentation
 "------------------------------------------------------------------------------
 
-set autoindent
-set smartindent
-set smarttab
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
-set expandtab
-
-" Auto indent pasted text
-" nnoremap p p=`]<C-o>
-" nnoremap P P=`]<C-o>
-
 filetype plugin on
 filetype indent on
+
+set tabstop=2
+set shiftwidth=2
+set expandtab
 
 " Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
