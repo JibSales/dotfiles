@@ -1,4 +1,9 @@
-let g:onedark_termcolors=16
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+set background=dark
 colorscheme onedark
 
 " Create a background toggle
