@@ -15,3 +15,11 @@ function remove_old_ground {
 function dsh {
   docker exec -it $1 /bin/bash
 }
+
+function docker-curl {
+  curl --cert ~/.docker/cert.pem \
+       --key ~/.docker/key.pem \
+       --cacert ~/.docker/ca.pem \
+       https://$(echo $DOCKER_HOST | sed -e 's/^tcp:\/\///g')$1 \
+       ${@:2}
+}
