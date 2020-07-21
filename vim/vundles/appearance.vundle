@@ -1,4 +1,5 @@
-Bundle "itchyny/lightline.vim"
+Bundle "vim-airline/vim-airline"
 Bundle "jeffkreeftmeijer/vim-numbertoggle"
 Bundle "sheerun/vim-polyglot"
-Bundle "joshdick/onedark.vim"
+Bundle "rakr/vim-one"
+Bundle "ntpeters/vim-better-whitespace"

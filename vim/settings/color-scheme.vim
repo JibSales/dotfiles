@@ -1,11 +1,16 @@
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 if (has("termguicolors"))
   set termguicolors
 endif
 
 set background=dark
-set t_Co=256
-colorscheme onedark
+colorscheme one
 
-" Create a background toggle
-map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+function! BgToggle()
+  if (&background ==? "light")
+    set background=dark
+  else
+    set background=light
+  endif
+endfunction
+
+nnoremap <leader>bg :call BgToggle()<cr>
