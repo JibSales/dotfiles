@@ -1,6 +1,6 @@
 CUSTOM_REMOTE_SESSION_PROMPT=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  CUSTOM_REMOTE_SESSION_PROMPT="%F{7}☁ %f "
+  CUSTOM_REMOTE_SESSION_PROMPT="%F{7} %f "
   if [ "$TERM" = "screen" ] || [ -n "$TMUX" ]; then
     CUSTOM_REMOTE_SESSION_PROMPT=""
   fi
