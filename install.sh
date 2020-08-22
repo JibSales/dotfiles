@@ -8,9 +8,8 @@ dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ###############################################################################
 
 function symlink_files {
-  for file in $1/*; do
+  for file in $1*; do
     dotfile=$HOME/.$(basename $file)
-    echo $dotfile
     if [[ -e "$dotfile" && ! -L "$dotfile" ]]; then
       cp $dotfile $dotfile.bckp
     fi
@@ -118,7 +117,7 @@ function install_zsh_config {
     git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"
   fi
 
-  symlink_files "$dotfiles_dir/zsh/z*"
+  symlink_files "$dotfiles_dir/zsh/z"
 
   log_done
 }
@@ -133,6 +132,6 @@ set_zsh_to_default_shell
 install_zsh_config
 
 banner "Adding miscellaneous configurations"
-symlink_files $dotfiles_dir/git
-symlink_files $dotfiles_dir/tmux
+symlink_files $dotfiles_dir/git/
+symlink_files $dotfiles_dir/tmux/
 log_done
