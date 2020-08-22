@@ -8,12 +8,13 @@ dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ###############################################################################
 
 function symlink_files {
-  for file in $1; do
+  for file in $1/*; do
     dotfile=$HOME/.$(basename $file)
+    echo $dotfile
     if [[ -e "$dotfile" && ! -L "$dotfile" ]]; then
       cp $dotfile $dotfile.bckp
     fi
-    echo -e "\033[0;33mSymlinking\033[0m $file \033[0;35m-->\033[0m .$(basename $file)"
+    echo -e "\033[0;33mSymlinking\033[0m $file \033[0;35m-->\033[0m ~/.$(basename $file)"
     ln -nfs $file $dotfile
   done
 }
@@ -48,7 +49,7 @@ function install_homebrew {
   if [ $? == 0 ]; then
     already_installed "brew"
   else
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   fi
 
   banner "Updating Homebrew"
@@ -68,19 +69,6 @@ function install_packages {
       fi
     done <$dotfiles_dir/packages/osx.txt
   fi
-  log_done
-}
-
-function install_applications {
-  banner "Installing Applications"
-  brew tap caskroom/cask
-  for application in $(cat $dotfiles_dir/packages/applications.txt | tr '\n' ' '); do
-    if brew cask ls --versions $application > /dev/null; then
-      already_installed $application
-    else
-      brew cask install $application 2>/dev/null
-    fi
-  done
   log_done
 }
 
@@ -135,63 +123,16 @@ function install_zsh_config {
   log_done
 }
 
-function install_fonts {
-  banner "Installing patched fonts for Powerline/Lightline."
-
-  if [[ $OSTYPE == darwin* ]]; then
-    cp -f $dotfiles_dir/fonts/* $HOME/Library/Fonts
-  fi
-
-  if [[ $OSTYPE == linux* ]]; then
-    mkdir -p ~/.fonts && cp $dotfiles_dir/fonts/* ~/.fonts && fc-cache -vf ~/.fonts
-  fi
-  log_done
-}
-
-function install_iterm_solarized_theme {
-  banner "Installing iTerm2 solarized theme."
-
-  # Query and save the value; suppress any error message, if key not found.
-  local plist_file=$HOME/Library/Preferences/com.googlecode.iterm2.plist
-  local solarized_light=$(/usr/libexec/PlistBuddy -c "Print 'Custom Color Presets':'Solarized Light'" $plist_file 2>/dev/null)
-  local solarized_dark=$(/usr/libexec/PlistBuddy -c "Print 'Custom Color Presets':'Solarized Dark'" $plist_file 2>/dev/null)
-
-  if [[ ! $solarized_light == 0 ]]; then
-    already_installed "Solarized Light"
-  else
-    local key_path=":'Custom Color Presets':'Solarized Light'"
-    local file="$dotfiles_dir/iTerm2/Solarized Light.itermcolors"
-    /usr/libexec/PlistBuddy -c "Add '$itermcolor_file' $key_path dict" $plist_file
-    /usr/libexec/PlistBuddy -c "Merge '$file' $key_path" $plist_file
-  fi
-  if [[ ! $solarized_dark == 0 ]]; then
-    already_installed "Solarized Dark"
-  else
-    local key_path=":'Custom Color Presets':'Solarized Dark'"
-    local file="$dotfiles_dir/iTerm2/Solarized Dark.itermcolors"
-    /usr/libexec/PlistBuddy -c "Add $key_path dict" $plist_file
-    /usr/libexec/PlistBuddy -c "Merge '$file' $key_path" $plist_file
-  fi
-  log_done
-}
-
-
 ###############################################################################
 #  Task Runner
 ###############################################################################
 
-if [[ $OSTYPE == darwin* ]]; then
-  install_homebrew
-  install_applications
-  install_iterm_solarized_theme
-fi
 install_packages
 install_vim_config
 set_zsh_to_default_shell
 install_zsh_config
-#install_fonts
 
 banner "Adding miscellaneous configurations"
-symlink_files $dotfiles_dir/git/*
-symlink_files $dotfiles_dir/tmux/*
+symlink_files $dotfiles_dir/git
+symlink_files $dotfiles_dir/tmux
 log_done

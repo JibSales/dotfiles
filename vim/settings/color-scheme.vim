@@ -2,8 +2,8 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-set background=dark
 colorscheme one
+set background=dark
 
 function! BgToggle()
   if (&background ==? "light")
