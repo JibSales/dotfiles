@@ -216,7 +216,6 @@ if [ -n "$(/bin/ls ~/.zshrc.d)" ]; then
 fi
 
 #
-# Dedupe PATH
 #
 
 # NOTE: Should be called here but should be defined elsewhere
@@ -254,4 +253,3 @@ dedupe_path
     zcompile "$zcompdump"
   fi
 } &!
-
