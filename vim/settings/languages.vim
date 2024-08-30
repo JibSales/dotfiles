@@ -1,1 +1,4 @@
-au BufRead,BufNewFile *.md setlocal textwidth=72
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown set wrap
+augroup END
