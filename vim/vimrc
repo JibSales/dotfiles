@@ -42,15 +42,29 @@ let mapleader = ","
 imap jj <Esc>
 
 "------------------------------------------------------------------------------
-" Vundle Initialization
+" vim-plug Initialization
 "------------------------------------------------------------------------------
 
-" This loads all the plugins specified in ~/.vim/vundles.vim
-" Use Vundle plugin to manage all other plugins
-if filereadable(expand("~/.vim/vundles.vim"))
-  source ~/.vim/vundles.vim
-endif
-au BufNewFile,BufRead *.vundle set filetype=vim
+call plug#begin('~/.vim/plugged')
+
+Plug 'vim-airline/vim-airline'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'sheerun/vim-polyglot'
+Plug 'rakr/vim-one'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'jasdel/vim-smithy'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'jparise/vim-graphql'
+
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-git'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'preservim/nerdtree'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+call plug#end()
 
 "------------------------------------------------------------------------------
 " Turn Off Swap Files

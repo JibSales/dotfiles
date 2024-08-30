@@ -1,5 +1,0 @@
-Bundle "ctrlpvim/ctrlp.vim"
-Bundle "tpope/vim-git"
-Bundle "christoomey/vim-tmux-navigator"
-Bundle "preservim/nerdtree"
-Bundle "dense-analysis/ale"

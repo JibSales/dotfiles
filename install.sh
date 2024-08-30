@@ -77,15 +77,8 @@ function install_vim_config {
   ln -nfs $dotfiles_dir/vim $HOME/.vim
   ln -nfs $dotfiles_dir/vim/vimrc $HOME/.vimrc
 
-  local vundle_path=$dotfiles_dir/vim/bundle/vundle
-
-  if [ ! -d "$vundle_path" ]; then
-    cd $dotfiles_dir
-    git clone https://github.com/gmarik/vundle.git $vundle_path
-  fi
-
-  # Update vundle
-  vim --noplugin -u $HOME/.vim/vundles.vim -N \"+set hidden\" \"+syntax on\" +BundleClean +BundleInstall! +qall
+  # Update vim-plug
+  vim -c 'PlugInstall'
 
   log_done
 }
